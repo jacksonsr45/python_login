@@ -1,10 +1,11 @@
 __author__ = "jacksonsr45@gmail.com"
 
 import tkinter
-from app.src.data.app_login import Login
+from .import *
 
 class Main:
     def __init__(self):
         root = tkinter.Tk()
-        Login(root)
+        msg = User().__create__()
+        Login( root, msg)
         root.mainloop()
