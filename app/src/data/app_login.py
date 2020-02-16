@@ -13,6 +13,8 @@ class Login:
         self.root.geometry("400x200+{}+{}".format( x, y))
 
         self.msg = tkinter.StringVar()
+        self.username = tkinter.StringVar()
+        self.password = tkinter.StringVar()
 
 
 
