@@ -3,10 +3,9 @@ __author__ = "jacksonsr45@gmail.com"
 import tkinter
 from tkinter import messagebox
 from app.src.model.db_login import User
-from app.src.data.new_user import New_User
 
 
-class Login:
+class New_User:
     def __init__(self, root):
         self.root = root
         self.root.title("Login")
@@ -16,54 +15,51 @@ class Login:
         self.root.resizable(width=False, height=False)
 
         self.msg = tkinter.StringVar()
+        self.name_user = tkinter.StringVar()
         self.username = tkinter.StringVar()
         self.password = tkinter.StringVar()
 
         self.frame = self.__frame(self.root, "white", "black", 1, 0.05, 0.05, 0.9, 0.9)
 
+        self.__label(self.frame, ("Ubunto", 14), "white", "Name:", 0, 0, 0.3, 0.15)
+
+        self.name = self.__entry(self.frame, ("Ubunto", 14), self.name_user, "normal", "white", 
+                        0.3, 0, 0.6, 0.15)
+        self.name.focus()
+
         self.__label(self.frame, ("Ubunto", 14), "white", "Username:", 0, 0.2, 0.3, 0.15)
 
-        self.user_name = self.__entry(self.frame, ("Ubunto", 14), self.username, "normal", "white", 
+        self.__entry(self.frame, ("Ubunto", 14), self.username, "normal", "white", 
                         0.3, 0.2, 0.6, 0.15)
-        self.user_name.focus()
 
         self.__label(self.frame, ("Ubunto", 14), "white", "Password:", 0, 0.5, 0.3, 0.15)
 
         self.__entry(self.frame, ("Ubunto", 14), self.password, "normal", "white", 
                         0.3, 0.5, 0.6, 0.15, "*")
 
-        self.__button(self.root, "white", ("Ubunto", 8), "CREATE OR UPDATE USER", "normal", 0, 
-                        0.1, 0.7, 0.35, 0.15, command= self.__new_user)
+        self.__button(self.root, "white", ("Ubunto", 14), "UPDATE USER", "normal", 0, 
+                        0.1, 0.7, 0.35, 0.15, command= self.__update_user)
         
-        self.__button(self.root, "white", ("Ubunto", 14), "LOGIN", "normal", 0, 
-                        0.5, 0.7, 0.35, 0.15, command= self.__login)
-
-
-    def set_msg(self, msg):
-        self.show_msg(msg)
-        
-
-    def show_msg(self, msg):
-        self.msg.set(msg)
-        if len(self.msg.get()) > 5:
-            print(self.msg.get())
-            messagebox.showinfo('msg', self.msg.get())
+        self.__button(self.root, "white", ("Ubunto", 14), "SAVE", "normal", 0, 
+                        0.5, 0.7, 0.35, 0.15, command= self.__save)
 
     
-    def __login(self):
-        if User().__login__( self.username.get(), self.password.get()):
-            self.msg.set("Successfully Login")
-            messagebox.showinfo('msg', self.msg.get())
+    def __save(self):
+        if User().__save__( self.name_user.get(), self.username.get(), 
+                            self.password.get()):
+            self.msg.set("Successful user!")
+            self.root.destroy()
+            from app.src.data.app_login import Login
+            root = tkinter.Tk()
+            Login(root).set_msg(self.msg.get())
+            root.mainloop()
         else:
-            self.msg.set("Incorrect User or Password")
+            self.msg.set("ERROR creating user")
             messagebox.showinfo('msg', self.msg.get())
 
 
-    def __new_user(self):
-        self.root.destroy()
-        new_user = tkinter.Tk()
-        New_User(new_user)
-        new_user.mainloop()
+    def __update_user(self):
+        pass
 
 
     def __label(self, root, font, bg, text, x, y, width, height):
