@@ -27,3 +27,44 @@ class Login:
         if len(self.msg.get()) > 5:
             print(self.msg.get())
             messagebox.showinfo('msg', self.msg.get())
+
+
+    def __labels(self, root, font, bg, text, x, y, width, height):
+        label = tkinter.Label(root)
+        label.configure(font=font)
+        label.configure(anchor=tkinter.E)
+        label.configure(bg=bg)
+        label.configure(text=text)
+        label.place(relx=x, rely=y, relwidth=width, relheight=height)
+        return label
+
+
+    def __entry(self, root, font, bg, x, y, width, height):
+        entry = tkinter.Entry(root)
+        entry.configure(font=font)
+        entry.configure(bd=0)
+        entry.configure(state=tkinter.DISABLED)
+        entry.configure(bg=bg)
+        entry.place(relx=x, rely=y, relwidth=width, relheight=height)
+        return entry
+
+
+    def __buttons(self, root, bg, font, text, state, bd, x, y, width, height, command=None):
+        button = tkinter.Button(root)
+        button.configure( bg=bg )
+        button.configure( font=font )
+        button.configure( text=text )
+        button.configure(state=state)
+        button.configure( bd=bd )
+        button.configure( command=command )
+        button.place(relx=x, rely=y, relwidth=width, relheight=height )
+        return button
+    
+
+    def __frames(self, root, bg, hlbg, hlbd, x, y, width, height):
+        frame = tkinter.Frame(root)
+        frame.configure(bg=bg)
+        frame.configure( highlightbackground=hlbg )
+        frame.configure( highlightthickness=hlbd )
+        frame.place( relx=x, rely=y, relwidth=width, relheight=height)
+        return frame
