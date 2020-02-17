@@ -45,22 +45,26 @@ class New_User:
 
     
     def __save(self):
-        if User().__save__( self.name_user.get(), self.username.get(), 
-                            self.password.get()):
-            self.msg.set("Successful user!")
-            self.root.destroy()
-            from app.src.data.app_login import Login
-            root = tkinter.Tk()
-            Login(root).set_msg(self.msg.get())
-            root.mainloop()
-        else:
-            self.msg.set("ERROR creating user")
-            messagebox.showinfo('msg', self.msg.get())
+        value = User().__save__( self.name_user.get(), self.username.get(), 
+                            self.password.get())
+        self.msg.set(value)
+        self.root.destroy()
+        from app.src.data.app_login import Login
+        root = tkinter.Tk()
+        Login(root).set_msg(self.msg.get())
+        root.mainloop()
 
 
     def __update_user(self):
-        pass
-
+        value = User().__update__( self.username.get(), 
+                            self.password.get(), self.name_user.get())
+        self.msg.set(value)
+        self.root.destroy()
+        from app.src.data.app_login import Login
+        root = tkinter.Tk()
+        Login(root).set_msg(self.msg.get())
+        root.mainloop()
+        
 
     def __label(self, root, font, bg, text, x, y, width, height):
         label = tkinter.Label(root)

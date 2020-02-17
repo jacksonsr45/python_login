@@ -51,7 +51,8 @@ class Login:
 
     
     def __login(self):
-        if User().__login__( self.username.get(), self.password.get()):
+        result = User().__login__( self.username.get(), self.password.get())
+        if result:
             self.msg.set("Successfully Login")
             messagebox.showinfo('msg', self.msg.get())
         else:

@@ -33,13 +33,15 @@ class User:
             cursor.execute("""SELECT * FROM user WHERE name = '{}' \
                         and username = '{}'""".format( name, username))
             if (cursor.fetchall()):
-                print("Já cadastrado")
+                self.msg = "User already registered!!"
+                return self.msg  
             else:
                 cursor.execute("""INSERT INTO user( name, username, password) 
                 VALUES('{}','{}','{}')""".format(name, username, password))
                 conn.commit()
                 conn.close()
-                return True  
+                self.msg = "Successful user!"
+                return self.msg  
         except Exception as e:
             self.error = True
             self.msg = e
@@ -64,11 +66,21 @@ class User:
         conn = sqlite3.connect('login.db')
         cursor = conn.cursor()
         try:
-            cursor.execute("""UPDATE user SET name = '{}' ,username = '{}', \
-                password = '{}' WHERE password = '{}'""".format( name, 
-                                        username, password, password))
-            conn.commit()
+            cursor.execute("""SELECT * FROM user WHERE name = '{}'""".format(name))
+            if cursor.fetchall():
+                cursor.execute("""UPDATE user SET username = '{}', \
+                    password = '{}' WHERE name = '{}'""".format( username, password,
+                                        name))
+                conn.commit()
+                self.msg = "Successful update user!"
+                return self.msg
+            else: 
+                self.msg = "ERROR!!"
+                return self.msg
+            
         except Exception as e:
             self.error = True
             self.msg = e
+            return self.msg
+        
         conn.close()
