@@ -2,6 +2,7 @@ __author__ = "jacksonsr45@gmail.com"
 
 import tkinter
 from tkinter import messagebox
+from app.src.model.db_login import User
 
 
 class Login:
@@ -31,10 +32,11 @@ class Login:
                         0.3, 0.5, 0.6, 0.15)
 
         self.__button(self.root, "white", ("Ubunto", 14), "CREATE USER", "normal", 0, 
-                        0.1, 0.7, 0.35, 0.15)
+                        0.1, 0.7, 0.35, 0.15, lambda new_user = self.__new_user: new_user())
         
         self.__button(self.root, "white", ("Ubunto", 14), "LOGIN", "normal", 0, 
-                        0.5, 0.7, 0.35, 0.15)
+                        0.5, 0.7, 0.35, 0.15, lambda login = self.__login, 
+                        n= self.name.get(), p= self.password.get(): login( n, p))
 
 
     def set_msg(self, msg):
@@ -46,6 +48,20 @@ class Login:
         if len(self.msg.get()) > 5:
             print(self.msg.get())
             messagebox.showinfo('msg', self.msg.get())
+
+    
+    def __login(self, n, p):
+        result = User().__login__( n, p)
+        if result:
+            self.msg.set("Successfully Login")
+            messagebox.showinfo('msg', self.msg.get())
+        else:
+            self.msg.set("Incorrect User or Password")
+            messagebox.showinfo('msg', self.msg.get())
+
+
+    def __new_user(self):
+        pass
 
 
     def __label(self, root, font, bg, text, x, y, width, height):
